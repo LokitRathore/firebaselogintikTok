@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "534175685248",
+    "project_id": "mylearningis",
+    "storage_bucket": "mylearningis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534175685248:android:d24ad806d46203af6da465",
+        "android_client_info": {
+          "package_name": "com.example.myloginsec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534175685248-u9v859cs5am3qi0du0gs3rpdglk3ao0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw3ltgWC8djklbPb-oOxD6vGaDG8nR9Kg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534175685248-u9v859cs5am3qi0du0gs3rpdglk3ao0m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
