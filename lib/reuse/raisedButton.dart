@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 class RaisedButton extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
+  final bool loading;
   const RaisedButton({super.key,
     required this.title,
-    required this.onTap
+    required this.onTap,
+    this.loading = false
   });
 
   @override
@@ -20,7 +22,7 @@ class RaisedButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10)
         ),
         child: Center(
-          child: Text(title, style: TextStyle(color: Colors.white),),
+          child: loading?  Text(title, style: TextStyle(color: Colors.white),) : CircularProgressIndicator(),
         ),
       ),
     );

@@ -1,7 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myloginsec/auth/SignUpScreen.dart';
-import 'package:myloginsec/reuse/raisedButton.dart';
+
+import '../game/screens/game.dart';
+import '../pages/postLogin.dart';
+import '../reuse/raisedButton.dart';
+import '../utils/utils.dart';
+// import 'package:login_project/auth/SignUpScreen.dart';
+// import 'package:login_project/reuse/raisedButton.dart';
+// import 'package:login_project/utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +22,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool loading = false;
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void dispose() {
@@ -23,13 +34,36 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController.dispose();
   }
 
+  void login() {
+    setState(() {
+      loading =true;
+    });
+    _auth.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text)
+        .then((value) {
+      Utils().toastMsg(value.user!.email.toString());
+      // Navigator.push(context, MaterialPageRoute(builder: (context)=> PostLogin()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> GameScreen()));
+      setState(() {
+        loading =false;
+      });
+    })
+        .catchError((error, stackTrace) {
+      Utils().toastMsg(error);
+      setState(() {
+        loading =false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ( ) async{
+      onWillPop: () async {
         SystemNavigator.pop();
         return true;
-      } ,
+      },
       child: Scaffold(
         appBar: AppBar(
           title: Text("Login"),
@@ -76,20 +110,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   )),
               RaisedButton(
                 title: "Log In",
+                loading: true,
                 onTap: () {
-                  if(_formKey.currentState!.validate()) {
-
+                  if (_formKey.currentState!.validate()) {
+                    login();
                   }
                 },
               ),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have account"),
-                  TextButton(onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUPScreen()));
-                  } , child: Text("Sing in"))
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUPScreen()));
+                      },
+                      child: Text("Sing in"))
                 ],
               )
             ],
